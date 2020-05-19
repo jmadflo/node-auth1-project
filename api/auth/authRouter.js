@@ -17,7 +17,9 @@ router.post('/register', (req, res) => {
         // save the user to the database
         Users.add(credentials)
             .then(user => {
-                req.session.loggedIn === true
+                // console.log(user)
+                req.session.loggedIn = true
+                req.session.user = user
 
                 res.status(201).json({ data: user })
             })
@@ -35,6 +37,7 @@ router.post('/login', (req, res) => {
     if (isValid(req.body)) {
         Users.findBy({ username })
             .then(([user]) => {
+                // console.log(user)
                 // compare the password the hash stored in the database
                 if (user && bcryptjs.compareSync(password, user.password)) {
                     // we can save information about the client inside the session (req.session)

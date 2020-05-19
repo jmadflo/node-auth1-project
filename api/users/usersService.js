@@ -9,6 +9,7 @@ function isValid(user) {
 
 // I'm bringing restricted into this file because we might want to restrict other routes in the future
 function restricted(req, res, next) {
+    console.log(req.session)
     if (req.session && req.session.loggedIn) {
         next()
     } else {
