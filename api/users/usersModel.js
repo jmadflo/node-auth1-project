@@ -17,12 +17,22 @@ function findBy(filter) {
 }
 
 // add a user to the database
-function add(user) {
-    db('users').insert(user, 'id')
-        .then(([id]) => {
-            return findById(id)
-        })
-        .catch(() => console.log('user could not be added'))
+// function add(user) {
+//     return db('users').insert(user)
+//         .then(([id]) => {
+//             console.log(id)
+//             return findById(id)
+//         })
+//         .catch(() => console.log('user could not be added'))
+// }
+async function add(user) {
+    try {
+        const [id] = await db("users").insert(user, "id")
+        console.log(id)
+        return findById(id)
+    } catch (error) {
+        throw error
+    }
 }
 
 // find user by id
